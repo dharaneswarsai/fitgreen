@@ -1,102 +1,292 @@
 # FITGREEN Growth System
 
-A gym CRM + marketing site for FITGREEN, a strength & conditioning club. The public
-site captures leads; the admin app runs them through follow-ups, trials,
-conversions and revenue reporting.
+A full-stack gym CRM and growth platform built for FITGREEN, a strength & conditioning club.
 
-The full loop:
+FITGREEN connects the public marketing website with an internal CRM to manage the complete customer journey:
 
-```
-public lead -> CRM -> follow-up -> trial -> attendance -> membership -> revenue -> analytics
-```
+```text
+Lead → CRM → Follow-up → Trial → Attendance → Membership → Revenue → Analytics
+🚀 Overview
 
-## Stack
+FITGREEN is designed to bring lead generation and gym operations into one system.
 
-React 18, TypeScript, Vite, Tailwind CSS v4, React Router, Recharts, date-fns,
-lucide-react, Zod + react-hook-form, oxlint, Vitest, and optional Supabase.
+The platform includes a public-facing website for capturing potential customers and an admin application for managing leads, follow-ups, appointments, members, campaigns, tasks, notifications, and business analytics.
 
-## Getting started
+The project focuses on building practical software around real-world business workflows rather than a simple CRUD application.
 
-```bash
-npm install
-npm run dev
-```
+✨ Core Features
+Public Website
+Gym landing page
+Programs
+Trainers
+Memberships
+Testimonials
+Contact page
+Lead/signup form
+Responsive customer-facing experience
+CRM & Sales
+Lead management
+Lead details
+Sales pipeline
+Follow-up management
+Appointment tracking
+Lead scoring
+Trial and conversion workflows
+Gym Management
+Member management
+Team management
+Tasks
+Notifications
+Campaign management
+Operational workflows
+Analytics
+Dashboard
+Sales pipeline visibility
+Conversion-oriented metrics
+Campaign analytics
+Revenue reporting
+Charts and business insights
+Demo Roles
 
-Open the printed URL (default `http://localhost:5173`).
+The admin interface includes a role switcher for:
 
-- Public site: `/`, `/programs`, `/trainers`, `/memberships`, `/testimonials`, `/contact`
-- Signup form: `/join`
-- Admin app: `/admin`
+Owner
+Sales Manager
+Sales Executive
 
-There is **no login**. The app boots with a deterministic seeded dataset so every
-screen has realistic data on first load. Use the role switcher in the admin header
-to view the app as Owner, Sales Manager or Sales Exec — it filters visibility only,
-it never mutates data.
+The role switcher changes visibility within the demo without mutating the underlying dataset.
 
-> The build uses absolute asset paths, so it must be served over HTTP. Opening
-> `dist/index.html` directly with `file://` will fail. Use `npm run preview`.
+🧠 System Flow
 
-## Scripts
+The application is designed around the complete gym growth workflow:
 
-| Command              | What it does                                  |
-| -------------------- | --------------------------------------------- |
-| `npm run dev`        | Dev server with HMR                          |
-| `npm run build`      | `tsc -b` then production build to `dist/`    |
-| `npm run preview`    | Serve the built output                        |
-| `npm run typecheck`  | TypeScript, no emit                           |
-| `npm run lint`       | oxlint over `src`                             |
-| `npm test`           | Vitest suite (27 tests)                       |
-| `npm run test:watch` | Vitest in watch mode                          |
+Public Website
+      ↓
+Lead Capture
+      ↓
+Lead Management
+      ↓
+Follow-up
+      ↓
+Trial / Appointment
+      ↓
+Attendance
+      ↓
+Membership
+      ↓
+Revenue
+      ↓
+Analytics
 
-## Data storage
+This structure allows the application to represent both customer-facing interactions and internal business operations.
 
-LocalStorage is the default and requires no configuration. Every mutation runs
-through a pure `(db) => result` transform in `src/services/workflows.ts`, which the
-context then diffs and persists.
+🛠️ Tech Stack
+Frontend
+React 18
+TypeScript
+Vite
+Tailwind CSS v4
+React Router
+UI & Visualization
+Recharts
+lucide-react
+Forms & Validation
+Zod
+react-hook-form
+Data & Storage
+LocalStorage
+Optional Supabase / PostgreSQL integration
+Development & Testing
+Vitest
+oxlint
+💻 What I Built
 
-To switch to Postgres:
+The project was built as a practical full-stack business application rather than a static interface.
 
-1. Run `supabase/schema.sql` once in the Supabase SQL Editor. It is idempotent.
-2. Copy `.env.example` to `.env` and set `VITE_SUPABASE_URL` and
-   `VITE_SUPABASE_ANON_KEY`.
+Key areas include:
 
-The client is built with the anon key, so it is public in the bundle. The RLS
-policies shipped in `schema.sql` are permissive for exactly that reason — they suit
-a seeded demo, not real member data. Tighten them before going live; the SQL file
-contains a commented example.
-
-`Settings -> Reset demo data` restores the seed and clears local changes.
-
-## Layout
-
-```
+Public and admin application flows
+CRM-style lead and pipeline management
+Gym member and appointment workflows
+Business dashboards and analytics
+Reusable UI components
+Seeded demo data
+Local persistence
+Optional Supabase integration
+Role-based demo visibility
+Workflow and metric services
+Responsive web interfaces
+🏗️ Project Structure
 src/
-  components/    layout, ui primitives (Button, Card, DataTable, Overlay, Badges)
-  constants/     copy for the public site, enums, formatters, scoring thresholds
-  context/       AppContext: state, actions, persistence, viewer persona
-  lib/           seed, id, localStorage, Supabase mapping, data service
-  pages/public/  Home, Programs, Trainers, Memberships, Testimonials, Contact, Join
-  pages/admin/   Dashboard, Leads, LeadDetail, Pipeline, FollowUps, Appointments,
-                 Members, Campaigns, Analytics, Team, Notifications, Settings
-  services/      workflows (pure transforms), metrics, leadScoring, notifications
-  types/         the single source of truth for the data model
-```
+├── components/
+│   ├── admin/
+│   │   └── charts/
+│   ├── layout/
+│   └── ui/
+│
+├── constants/
+│
+├── context/
+│   └── AppContext.tsx
+│
+├── lib/
+│   ├── seed
+│   ├── storage
+│   ├── data services
+│   └── Supabase integration
+│
+├── pages/
+│   ├── public/
+│   └── admin/
+│
+├── services/
+│   ├── metrics
+│   ├── lead scoring
+│   ├── notifications
+│   └── business workflows
+│
+└── types/
+    └── index.ts
 
-Everything reads its schema from `src/types/index.ts`.
+The shared data model is maintained through:
 
-## Editing gym copy
+src/types/index.ts
+📊 Data & Architecture
 
-Public-site copy, opening hours, programs, trainers and testimonials live in
-`src/constants/content.ts`. `Settings` links there directly, because that one file
-drives the whole public site.
+LocalStorage is the default storage layer, allowing the application to run without external configuration.
 
-## Deploying
+The application starts with a deterministic seeded dataset so the different CRM and analytics screens can be explored immediately.
 
-`vercel.json` is included with an SPA rewrite, so client-side routes survive a hard
-refresh.
+Supabase
 
-```bash
-vercel
-```
+The project also includes an optional Supabase/PostgreSQL setup.
 
-Any static host works too — build to `dist/` and rewrite all paths to `index.html`.
+To use Supabase:
+
+Run supabase/schema.sql in the Supabase SQL Editor.
+Copy .env.example to .env.
+Configure:
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+
+The project uses the Supabase anon key on the client. The included RLS configuration is intended for the seeded demo environment and should be tightened before using real member/customer data in production.
+
+🧪 Testing
+
+The project includes a Vitest test suite.
+
+Run:
+
+npm test
+
+For continuous development:
+
+npm run test:watch
+⚙️ Getting Started
+
+Clone the repository:
+
+git clone https://github.com/dharaneswarsai/fitgreen.git
+cd fitgreen
+
+Install dependencies:
+
+npm install
+
+Start the development server:
+
+npm run dev
+
+Open the local URL printed by Vite.
+
+Main Routes
+
+Public:
+
+/
+ /programs
+ /trainers
+ /memberships
+ /testimonials
+ /contact
+ /join
+
+Admin:
+
+/admin
+/admin/leads
+/admin/pipeline
+/admin/follow-ups
+/admin/appointments
+/admin/members
+/admin/campaigns
+/admin/analytics
+/admin/team
+/admin/notifications
+/admin/settings
+📜 Available Scripts
+Command	Description
+npm run dev	Start development server with HMR
+npm run build	Type-check and create production build
+npm run preview	Preview the production build
+npm run typecheck	Run TypeScript checking
+npm run lint	Run oxlint
+npm test	Run Vitest tests
+npm run test:watch	Run Vitest in watch mode
+🔄 Demo Data
+
+The application starts with seeded demo data.
+
+From the admin settings, demo data can be reset to the initial state.
+
+This makes the project easy to evaluate without requiring an external database.
+
+🚀 Deployment
+
+The repository includes a vercel.json configuration for SPA routing.
+
+Build the application:
+
+npm run build
+
+The production output is generated in:
+
+dist/
+
+The application can be deployed to Vercel or another static hosting provider that supports SPA rewrites.
+
+🎯 Project Focus
+
+FITGREEN was built to explore how software can support a real business workflow from the first customer interaction through sales and ongoing operations.
+
+The main focus areas were:
+
+Full-stack web development
+Business workflow design
+CRM systems
+Data management
+Dashboard development
+Responsive interfaces
+Practical software architecture
+🔮 Future Improvements
+
+Potential future improvements include:
+
+Authentication and authorization
+Production-grade database security
+More granular user permissions
+Real-time notifications
+WhatsApp/email integrations
+Advanced reporting
+Production analytics
+Automated deployment and monitoring
+
+Built as a practical full-stack software project by Nagineni Dharaneswar Sai Chowdary.
+
+
+Then save it and run:
+
+```powershell
+git add README.md
+git commit -m "Improve FITGREEN README"
+git push
